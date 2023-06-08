@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  modules: ["@bg-dev/nuxt-naiveui"],
+  modules: ["@bg-dev/nuxt-naiveui", "@nuxtjs/tailwindcss"],
 
   naiveui: {
     colorModePreference: "light",

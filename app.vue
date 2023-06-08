@@ -1,19 +1,29 @@
 <template>
-  <div>
-    <NaiveConfig :theme-config="themeConfig">
-      <NuxtWelcome />
-    </NaiveConfig>
-  </div>
+  <NaiveConfig>
+    <n-message-provider>
+      <NuxtLayout>
+        <NuxtLoadingIndicator color="#be185d" :height="5" />
+        <NuxtPage />
+      </NuxtLayout>
+    </n-message-provider>
+  </NaiveConfig>
 </template>
 
 <script setup lang="ts">
-import { ThemeConfig} from "@bg-dev/nuxt-naiveui"
+import "vue3-lottie/dist/style.css";
 
-const themeConfig: ThemeConfig = {
-  shared: {}, // Common theme options
-  mobileOrTablet: {}, // Theme options applied on mobile and tablet
-  mobile: {}, // Theme options applied on mobile only
-  light: {}, // Theme options applied on light mode
-  dark: {}, // Theme options applied on dark mode
-}
+useHead({
+  title: "Scholar Stack",
+  
+  
+  meta: [
+    {
+      name: "description",
+      content:
+        "Add your description here",
+    },
+  
+  ],
+});
+
 </script>
