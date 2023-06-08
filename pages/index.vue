@@ -52,7 +52,7 @@
       <p class="text-base text-slate-600 font-normal">
         D<sub>1</sub>, D<sub>2</sub
         ><span v-if="mode === 'trifurcation'">, D<sub>3</sub></span> - Diameter
-        of the daughter segment
+        of the daughter segments
       </p>
     </div>
 
