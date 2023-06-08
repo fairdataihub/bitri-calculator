@@ -1,6 +1,6 @@
 <template>
   <NaiveConfig>
-    <n-message-provider>
+    <n-message-provider placement="bottom">
       <NuxtLayout>
         <NuxtLoadingIndicator color="#be185d" :height="5" />
         <NuxtPage />

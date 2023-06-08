@@ -28,7 +28,7 @@
       <n-select
         v-model:value="unit"
         :options="unitOptions"
-        class="w-[100px]"
+        class="w-[150px]"
         size="large"
       />
     </div>
@@ -36,18 +36,23 @@
     <n-divider />
 
     <div class="flex flex-col mb-5">
-      <p class="mb-4 text-2xl font-medium">
+      <p class="mb-3 text-2xl font-medium" v-if="mode === 'bifurcation'">
         Enter two of the three available diameters:
+      </p>
+      <p class="mb-3 text-2xl font-medium" v-else>
+        Enter three of the four available diameters:
       </p>
 
       <!-- <n-divider /> -->
 
-      <p class="text-lg text-slate-600 font-normal">
+      <p class="text-base text-slate-600 font-normal">
         D<sub>m</sub> - Diameter of the mother segment
       </p>
 
-      <p class="text-lg text-slate-600 font-normal">
-        D<sub>1</sub>, D<sub>2</sub> - Diameter of the mother segment
+      <p class="text-base text-slate-600 font-normal">
+        D<sub>1</sub>, D<sub>2</sub
+        ><span v-if="mode === 'trifurcation'">, D<sub>3</sub></span> - Diameter
+        of the daughter segment
       </p>
     </div>
 
@@ -58,34 +63,40 @@
           <n-input-number
             v-model:value="dm"
             clearable
+            :placeholder="placeholder"
             :disabled="disableInput && (dm === undefined || dm === null)"
             size="large"
             :on-change="hideOutput"
           />
-          <p class="text-lg font-normal">{{ unit }}</p>
+          <p class="text-lg font-normal w-[50px]">{{ unit }}</p>
         </div>
+
         <div class="flex flex-row items-center space-x-4 my-4">
           <p class="text-xl font-medium w-[30px]">D<sub>1</sub></p>
           <n-input-number
             v-model:value="d1"
             clearable
+            :placeholder="placeholder"
             :disabled="disableInput && (d1 === undefined || d1 === null)"
             size="large"
             :on-change="hideOutput"
           />
-          <p class="text-lg font-normal">{{ unit }}</p>
+          <p class="text-lg font-normal w-[50px]">{{ unit }}</p>
         </div>
+
         <div class="flex flex-row items-center space-x-4 my-4">
           <p class="text-xl font-medium w-[30px]">D<sub>2</sub></p>
           <n-input-number
             v-model:value="d2"
             clearable
+            :placeholder="placeholder"
             :disabled="disableInput && (d2 === undefined || d2 === null)"
             size="large"
             :on-change="hideOutput"
           />
-          <p class="text-lg font-normal">{{ unit }}</p>
+          <p class="text-lg font-normal w-[50px]">{{ unit }}</p>
         </div>
+
         <div
           class="flex flex-row items-center space-x-4 my-4"
           v-if="mode === 'trifurcation'"
@@ -94,11 +105,12 @@
           <n-input-number
             v-model:value="d3"
             clearable
+            :placeholder="placeholder"
             :disabled="disableInput && (d3 === undefined || d3 === null)"
             size="large"
             :on-change="hideOutput"
           />
-          <p class="text-lg font-normal">{{ unit }}</p>
+          <p class="text-lg font-normal w-[50px]">{{ unit }}</p>
         </div>
 
         <div class="w-full flex my-6 justify-center">
@@ -126,14 +138,31 @@
     </div>
 
     <n-collapse-transition :show="showOutput">
+      <p class="text-2xl font-bold">
+        The suitable diameter for the
+        <span>
+          {{ output.label === "m" ? "mother" : "daughter" }} segment
+        </span>
+        (<span
+          >D<sub>{{ output.label }}</sub> </span
+        >) to achieve optimate blood flow is {{ output.val }} {{ unit }}.
+      </p>
+
+      <n-divider />
+    </n-collapse-transition>
+
+    <n-collapse-transition :show="showOutput">
+      <p class="mb-4 text-lg font-semibold">How is it calculated?</p>
+
       <div
         class="w-full p-8 flex flex-col items-center bg-amber-50 rounded-lg text-2xl font-medium"
       >
         <p class="my-3">
-          D <sub>m</sub> <sup>7/3</sup> = D <sub>1</sub> <sup>7/3</sup> + D
-          <sub>2</sub> <sup>7/3</sup>
+          D<sub>m</sub><sup class="font-normal">7/3</sup> = D<sub>1</sub
+          ><sup class="font-normal">7/3</sup> + D<sub>2</sub
+          ><sup class="font-normal">7/3</sup>
           <span v-if="mode === 'trifurcation'">
-            + D <sub>3</sub> <sup>7/3</sup>
+            + D<sub>3</sub><sup class="font-normal">7/3</sup>
           </span>
         </p>
 
@@ -141,30 +170,32 @@
           <span v-if="dm">
             {{ dm }}
           </span>
-          <span v-else> D <sub>m</sub> </span>
-          <sup>7/3</sup> =
+          <span v-else> D<sub>m</sub> </span>
+          <sup class="font-normal">7/3</sup> =
           <span v-if="d1">
             {{ d1 }}
           </span>
-          <span v-else> D <sub>1</sub> </span> <sup>7/3</sup> +
+          <span v-else> D<sub>1</sub> </span
+          ><sup class="font-normal">7/3</sup> +
           <span v-if="d2">
             {{ d2 }}
           </span>
-          <span v-else> D <sub>2</sub> </span>
-          <sup>7/3</sup>
+          <span v-else> D<sub>2</sub> </span>
+          <sup class="font-normal">7/3</sup>
           <span v-if="mode === 'trifurcation'">
             +
             <span v-if="d3">
               {{ d3 }}
             </span>
-            <span v-else> D <sub>3</sub> </span> <sup>7/3</sup>
+            <span v-else> D<sub>3</sub> </span>
+            <sup class="font-normal">7/3</sup>
           </span>
         </p>
 
         <n-divider />
 
         <p class="my-4 text-3xl font-semibold">
-          D<sub>{{ output.label }}</sub> = {{ output.val }}
+          D<sub>{{ output.label }}</sub> = {{ output.val }} {{ unit }}
         </p>
       </div>
     </n-collapse-transition>
@@ -172,18 +203,23 @@
 </template>
 
 <script setup lang="ts">
+import { useMessage, NAlert } from "naive-ui";
+import type { MessageRenderMessage } from "naive-ui";
+
+const message = useMessage();
+
 const unitOptions = [
   {
-    label: "mm",
+    label: "millimeters",
     value: "mm",
   },
   {
-    label: "cm",
+    label: "centimeters",
     value: "cm",
   },
   {
-    label: "m",
-    value: "m",
+    label: "inches",
+    value: "in",
   },
 ];
 
@@ -199,13 +235,16 @@ const showOutput = ref(false);
 
 const output = ref({
   label: "",
-  val: 0,
+  val: "",
 });
 
 const resetCalculation = (value: string) => {
   showOutput.value = false;
 
-  d3.value = undefined;
+  dm.value = null;
+  d1.value = null;
+  d2.value = null;
+  d3.value = null;
 
   mode.value = value;
 };
@@ -213,6 +252,14 @@ const resetCalculation = (value: string) => {
 const hideOutput = () => {
   showOutput.value = false;
 };
+
+const placeholder = computed(() => {
+  if (disableInput.value) {
+    return "";
+  } else {
+    return "Enter diameter";
+  }
+});
 
 const disableInput = computed(() => {
   // disable the input if two of the three diameters are provided
@@ -239,7 +286,40 @@ const emptyInput = (val: any) => {
   return false;
 };
 
+const renderMessage: MessageRenderMessage = (props) => {
+  const { type } = props;
+  return h(
+    NAlert,
+    {
+      closable: props.closable,
+      onClose: props.onClose,
+      type: type === "loading" ? "default" : type,
+      title: "Invalid Parameters",
+      style: {
+        boxShadow: "var(--n-box-shadow)",
+        maxWidth: "calc(100vw - 32px)",
+        width: "480px",
+      },
+    },
+    {
+      default: () => props.content,
+    }
+  );
+};
+
 const diameterCalculation = (dm: number, dx: number[]) => {
+  // if dm is lower than the other diameters, throw an error
+  if (dm <= Math.max(...dx)) {
+    message.error(
+      "The diameter of the mother segment (Dm) should be greater than the daughter segment(s)",
+      {
+        render: renderMessage,
+        closable: true,
+      }
+    );
+    throw new Error("Dm must be greater than the other diameters");
+  }
+
   if (dm === undefined || dm === null) {
     let rightSide = 0;
 
@@ -269,9 +349,14 @@ const diameterCalculation = (dm: number, dx: number[]) => {
 };
 
 const calculate = () => {
-  const val = diameterCalculation(dm.value, [d1.value, d2.value, d3.value]);
+  const rightSide = [d1.value, d2.value, d3.value];
 
-  output.value.val = val;
+  // remove undefined values
+  const dx = rightSide.filter((d) => d !== undefined && d !== null);
+
+  const val = diameterCalculation(dm.value, dx);
+
+  output.value.val = val.toFixed(2);
 
   if (emptyInput(dm.value)) {
     output.value.label = "m";
