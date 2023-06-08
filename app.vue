@@ -13,17 +13,13 @@
 import "vue3-lottie/dist/style.css";
 
 useHead({
-  title: "Scholar Stack",
-  
-  
+  title: "Bifurcation Calculator",
+
   meta: [
     {
       name: "description",
-      content:
-        "Add your description here",
+      content: "Add your description here",
     },
-  
   ],
 });
-
 </script>

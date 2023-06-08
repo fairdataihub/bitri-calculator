@@ -186,7 +186,7 @@ body {
 }
 
 .animation-pulse {
-  /*box-shadow: 0 0 0 20px lightgreen;
+  /*box-shadow: 0 0 0 20px skyblue;
   transform: scale(0.8);*/
   animation: pulse 2s infinite;
 }
@@ -194,12 +194,12 @@ body {
 @keyframes pulse {
   0% {
     transform: scale(0.97);
-    box-shadow: 0 0 0 0 lightgreen;
+    box-shadow: 0 0 0 0 skyblue;
   }
 
   50% {
     transform: scale(1);
-    box-shadow: 0 0 0 3px lightgreen;
+    box-shadow: 0 0 0 8px skyblue;
   }
 
   100% {

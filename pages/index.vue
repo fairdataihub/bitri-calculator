@@ -6,20 +6,25 @@
 
     <n-divider />
 
-    <h2 class="mb-8">
+    <p class="mb-4">
       Do you want to calculate the optimal diameter for a bifurcation or a
       trifurcation segment?
-    </h2>
+    </p>
 
-    <n-radio-group v-model:value="mode" name="modeSelector" size="large">
+    <n-radio-group
+      v-model:value="mode"
+      name="modeSelector"
+      size="large"
+      :on-update:value="resetCalculation"
+    >
       <n-radio-button value="bifurcation"> Bifurcation </n-radio-button>
-      <n-radio-button value="tifurcation"> Trifurcation </n-radio-button>
+      <n-radio-button value="trifurcation"> Trifurcation </n-radio-button>
     </n-radio-group>
 
     <n-divider />
 
     <div class="flex justify-start items-center space-x-8">
-      <h3>Provide the units used for the diameters:</h3>
+      <p>Provide the units used for the diameters:</p>
       <n-select
         v-model:value="unit"
         :options="unitOptions"
@@ -31,7 +36,9 @@
     <n-divider />
 
     <div class="flex flex-col mb-5">
-      <h3 class="mb-4">Enter two of the three available diameters:</h3>
+      <p class="mb-4 text-2xl font-medium">
+        Enter two of the three available diameters:
+      </p>
 
       <!-- <n-divider /> -->
 
@@ -53,6 +60,7 @@
             clearable
             :disabled="disableInput && (dm === undefined || dm === null)"
             size="large"
+            :on-change="hideOutput"
           />
           <p class="text-lg font-normal">{{ unit }}</p>
         </div>
@@ -63,6 +71,7 @@
             clearable
             :disabled="disableInput && (d1 === undefined || d1 === null)"
             size="large"
+            :on-change="hideOutput"
           />
           <p class="text-lg font-normal">{{ unit }}</p>
         </div>
@@ -73,6 +82,21 @@
             clearable
             :disabled="disableInput && (d2 === undefined || d2 === null)"
             size="large"
+            :on-change="hideOutput"
+          />
+          <p class="text-lg font-normal">{{ unit }}</p>
+        </div>
+        <div
+          class="flex flex-row items-center space-x-4 my-4"
+          v-if="mode === 'trifurcation'"
+        >
+          <p class="text-xl font-medium w-[30px]">D<sub>3</sub></p>
+          <n-input-number
+            v-model:value="d3"
+            clearable
+            :disabled="disableInput && (d3 === undefined || d3 === null)"
+            size="large"
+            :on-change="hideOutput"
           />
           <p class="text-lg font-normal">{{ unit }}</p>
         </div>
@@ -100,6 +124,50 @@
         />
       </div>
     </div>
+
+    <n-collapse-transition :show="showOutput">
+      <div
+        class="w-full p-8 flex flex-col items-center bg-amber-50 rounded-lg text-2xl font-medium"
+      >
+        <p class="my-3">
+          D <sub>m</sub> <sup>7/3</sup> = D <sub>1</sub> <sup>7/3</sup> + D
+          <sub>2</sub> <sup>7/3</sup>
+          <span v-if="mode === 'trifurcation'">
+            + D <sub>3</sub> <sup>7/3</sup>
+          </span>
+        </p>
+
+        <p class="my-3">
+          <span v-if="dm">
+            {{ dm }}
+          </span>
+          <span v-else> D <sub>m</sub> </span>
+          <sup>7/3</sup> =
+          <span v-if="d1">
+            {{ d1 }}
+          </span>
+          <span v-else> D <sub>1</sub> </span> <sup>7/3</sup> +
+          <span v-if="d2">
+            {{ d2 }}
+          </span>
+          <span v-else> D <sub>2</sub> </span>
+          <sup>7/3</sup>
+          <span v-if="mode === 'trifurcation'">
+            +
+            <span v-if="d3">
+              {{ d3 }}
+            </span>
+            <span v-else> D <sub>3</sub> </span> <sup>7/3</sup>
+          </span>
+        </p>
+
+        <n-divider />
+
+        <p class="my-4 text-3xl font-semibold">
+          D<sub>{{ output.label }}</sub> = {{ output.val }}
+        </p>
+      </div>
+    </n-collapse-transition>
   </main>
 </template>
 
@@ -125,14 +193,43 @@ const unit = ref("mm");
 const dm = ref();
 const d1 = ref();
 const d2 = ref();
+const d3 = ref();
+
+const showOutput = ref(false);
+
+const output = ref({
+  label: "",
+  val: 0,
+});
+
+const resetCalculation = (value: string) => {
+  showOutput.value = false;
+
+  d3.value = undefined;
+
+  mode.value = value;
+};
+
+const hideOutput = () => {
+  showOutput.value = false;
+};
 
 const disableInput = computed(() => {
   // disable the input if two of the three diameters are provided
-  const providedDiameters = [dm.value, d1.value, d2.value].filter(
-    (d) => d !== undefined && d !== null
-  );
 
-  return providedDiameters.length === 2;
+  if (mode.value === "bifurcation") {
+    const providedDiameters = [dm.value, d1.value, d2.value].filter(
+      (d) => d !== undefined && d !== null
+    );
+
+    return providedDiameters.length === 2;
+  } else if (mode.value === "trifurcation") {
+    const providedDiameters = [dm.value, d1.value, d2.value, d3.value].filter(
+      (d) => d !== undefined && d !== null
+    );
+
+    return providedDiameters.length === 3;
+  }
 });
 
 const emptyInput = (val: any) => {
@@ -142,18 +239,50 @@ const emptyInput = (val: any) => {
   return false;
 };
 
+const diameterCalculation = (dm: number, dx: number[]) => {
+  if (dm === undefined || dm === null) {
+    let rightSide = 0;
+
+    dx.forEach((d) => {
+      if (d !== undefined && d !== null) {
+        rightSide += Math.pow(d, 7 / 3);
+      }
+    });
+
+    const val = Math.pow(rightSide, 3 / 7);
+
+    return val;
+  } else {
+    let leftSide = Math.pow(dm, 7 / 3);
+    let rightSide = 0;
+
+    dx.forEach((d) => {
+      if (d !== undefined && d !== null) {
+        rightSide += Math.pow(d, 7 / 3);
+      }
+    });
+
+    const val = Math.pow(leftSide - rightSide, 3 / 7);
+
+    return val;
+  }
+};
+
 const calculate = () => {
+  const val = diameterCalculation(dm.value, [d1.value, d2.value, d3.value]);
+
+  output.value.val = val;
+
   if (emptyInput(dm.value)) {
-    const val = Math.pow(d1.value, 7 / 3) + Math.pow(d2.value, 7 / 3);
-    dm.value = val;
+    output.value.label = "m";
   } else if (emptyInput(d1.value)) {
-    const val = Math.pow(dm.value, 7 / 3) - Math.pow(d2.value, 7 / 3);
-    d1.value = val;
+    output.value.label = "1";
   } else if (emptyInput(d2.value)) {
-    const val = Math.pow(dm.value, 7 / 3) - Math.pow(d1.value, 7 / 3);
-    d2.value = val;
+    output.value.label = "2";
+  } else if (emptyInput(d3.value)) {
+    output.value.label = "3";
   }
 
-  console.log(dm.value, d1.value, d2.value);
+  showOutput.value = true;
 };
 </script>
