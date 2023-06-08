@@ -145,7 +145,7 @@
         </span>
         (<span
           >D<sub>{{ output.label }}</sub> </span
-        >) to achieve optimate blood flow is {{ output.val }} {{ unit }}.
+        >) to achieve optimum blood flow is {{ output.val }} {{ unit }}.
       </p>
 
       <n-divider />
