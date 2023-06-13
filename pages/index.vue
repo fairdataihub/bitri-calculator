@@ -6,7 +6,7 @@
 
     <n-divider />
 
-    <p class="mb-4">
+    <p class="mb-4 text-2xl font-medium">
       Do you want to calculate the optimal diameter for a bifurcation or a
       trifurcation segment?
     </p>
@@ -24,7 +24,9 @@
     <n-divider />
 
     <div class="flex justify-start items-center space-x-8">
-      <p>Provide the units used for the diameters:</p>
+      <p class="text-2xl font-medium">
+        Provide the units used for the diameters:
+      </p>
       <n-select
         v-model:value="unit"
         :options="unitOptions"
@@ -143,9 +145,10 @@
         <span>
           {{ output.label === "m" ? "mother" : "daughter" }} segment
         </span>
-        (<span
-          >D<sub>{{ output.label }}</sub> </span
-        >) to achieve optimum blood flow is {{ output.val }} {{ unit }}.
+        <span
+          >D<sub>{{ output.label }}</sub>
+        </span>
+        to achieve optimum blood flow is {{ output.val }} {{ unit }}.
       </p>
 
       <n-divider />
@@ -196,6 +199,31 @@
 
         <p class="my-4 text-3xl font-semibold">
           D<sub>{{ output.label }}</sub> = {{ output.val }} {{ unit }}
+        </p>
+
+        <p class="reference" v-if="mode == 'bifurcation'">
+          The diameter to achieve optimal blood flow in the bifurcation is
+          calculated based on the Huo-Kassab (HK) model
+          <a
+            href="https://doi.org/10.4244/EIJV7I11A206"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-400 hover:text-blue-600 transition-all hover:underline"
+          >
+            [1]
+          </a>
+        </p>
+        <p class="reference" v-if="mode == 'trifurcation'">
+          The diameter to achieve optimal blood flow in the trifurcation is
+          calculated based on the Huo-Kassab (HK) model
+          <a
+            href="https://doi.org/10.4244/eijv11sva3"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-400 hover:text-blue-600 transition-all hover:underline"
+          >
+            [2]
+          </a>
         </p>
       </div>
     </n-collapse-transition>
@@ -308,18 +336,6 @@ const renderMessage: MessageRenderMessage = (props) => {
 };
 
 const diameterCalculation = (dm: number, dx: number[]) => {
-  // if dm is lower than the other diameters, throw an error
-  if (dm <= Math.max(...dx)) {
-    message.error(
-      "The diameter of the mother segment (Dm) should be greater than the daughter segment(s)",
-      {
-        render: renderMessage,
-        closable: true,
-      }
-    );
-    throw new Error("Dm must be greater than the other diameters");
-  }
-
   if (dm === undefined || dm === null) {
     let rightSide = 0;
 
@@ -333,6 +349,18 @@ const diameterCalculation = (dm: number, dx: number[]) => {
 
     return val;
   } else {
+    // if dm is lower than the other diameters, throw an error
+    if (dm <= Math.max(...dx)) {
+      message.error(
+        "The diameter of the mother segment (Dm) should be greater than the daughter segment(s)",
+        {
+          render: renderMessage,
+          closable: true,
+        }
+      );
+      throw new Error("Dm must be greater than the other diameters");
+    }
+
     let leftSide = Math.pow(dm, 7 / 3);
     let rightSide = 0;
 
@@ -371,3 +399,9 @@ const calculate = () => {
   showOutput.value = true;
 };
 </script>
+
+<style scoped>
+.reference {
+  @apply text-base text-slate-600 font-normal mt-3 text-sm;
+}
+</style>
