@@ -160,6 +160,31 @@
       <div
         class="w-full p-8 flex flex-col items-center bg-amber-50 rounded-lg text-2xl font-medium"
       >
+        <p class="reference" v-if="mode == 'bifurcation'">
+          The diameter to achieve optimal blood flow in the bifurcation is
+          calculated based on the Huo-Kassab (HK) model
+          <a
+            href="https://doi.org/10.4244/EIJV7I11A206"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-400 hover:text-blue-600 transition-all hover:underline"
+          >
+            [1]
+          </a>
+        </p>
+        <p class="reference" v-if="mode == 'trifurcation'">
+          The diameter to achieve optimal blood flow in the trifurcation is
+          calculated based on the Huo-Kassab (HK) model
+          <a
+            href="https://doi.org/10.4244/eijv11sva3"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-400 hover:text-blue-600 transition-all hover:underline"
+          >
+            [2]
+          </a>
+        </p>
+
         <p class="my-3">
           D<sub>m</sub><sup class="font-normal">7/3</sup> = D<sub>1</sub
           ><sup class="font-normal">7/3</sup> + D<sub>2</sub
@@ -199,31 +224,6 @@
 
         <p class="my-4 text-3xl font-semibold">
           D<sub>{{ output.label }}</sub> = {{ output.val }} {{ unit }}
-        </p>
-
-        <p class="reference" v-if="mode == 'bifurcation'">
-          The diameter to achieve optimal blood flow in the bifurcation is
-          calculated based on the Huo-Kassab (HK) model
-          <a
-            href="https://doi.org/10.4244/EIJV7I11A206"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-400 hover:text-blue-600 transition-all hover:underline"
-          >
-            [1]
-          </a>
-        </p>
-        <p class="reference" v-if="mode == 'trifurcation'">
-          The diameter to achieve optimal blood flow in the trifurcation is
-          calculated based on the Huo-Kassab (HK) model
-          <a
-            href="https://doi.org/10.4244/eijv11sva3"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-400 hover:text-blue-600 transition-all hover:underline"
-          >
-            [2]
-          </a>
         </p>
       </div>
     </n-collapse-transition>
@@ -402,6 +402,6 @@ const calculate = () => {
 
 <style scoped>
 .reference {
-  @apply text-base text-slate-600 font-normal mt-3 text-sm;
+  @apply text-lg text-slate-600 font-medium mb-4;
 }
 </style>
