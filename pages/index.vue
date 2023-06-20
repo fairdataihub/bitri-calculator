@@ -131,11 +131,16 @@
         </div>
       </div>
 
-      <div class="ml-[200px]">
+      <div class="ml-[200px]" v-if="mode == 'bifurcation'">
+        <n-image width="200" src="/images/bifurcation-1.svg" />
         <n-image
-          width="200"
-          src="https://f6publishing.blob.core.windows.net/a797ac81-d529-4743-83e2-7dd53df946a6/WJC-14-108-g001.png"
+          width="250"
+          src="/images/bifurcation-2.svg"
+          class="ml-[100px]"
         />
+      </div>
+      <div class="ml-[200px] flex space-x-8" v-if="mode == 'trifurcation'">
+        <n-image width="300" src="/images/trifurcation-1.svg" />
       </div>
     </div>
 
