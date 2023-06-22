@@ -66,7 +66,7 @@
     </div>
 
     <div
-      class="flex lg:flex-row flex-col-reverse lg:justify-start lg:items-center"
+      class="flex lg:flex-row flex-col-reverse lg:justify-start lg:items-start"
     >
       <div class="flex flex-col">
         <div class="flex flex-row items-center space-x-4 my-4">
@@ -148,7 +148,10 @@
           class="ml-10 md:ml-20 lg:ml-[100px]"
         />
       </div>
-      <div class="lg:ml-[200px] flex" v-if="mode == 'trifurcation'">
+      <div
+        class="lg:ml-[200px] flex justify-center lg:justify-start"
+        v-if="mode == 'trifurcation'"
+      >
         <n-image width="200" src="/images/trifurcation-1.svg" />
       </div>
     </div>
