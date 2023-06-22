@@ -140,7 +140,7 @@
         </div>
       </div>
 
-      <div class="lg:ml-[200px] flex" v-if="mode == 'bifurcation'">
+      <div class="lg:ml-[200px] flex py-3" v-if="mode == 'bifurcation'">
         <n-image width="200" src="/images/bifurcation-1.svg" />
         <n-image
           width="250"
@@ -149,7 +149,7 @@
         />
       </div>
       <div
-        class="lg:ml-[200px] flex justify-center lg:justify-start"
+        class="lg:ml-[200px] flex justify-center lg:justify-start py-3"
         v-if="mode == 'trifurcation'"
       >
         <n-image width="200" src="/images/trifurcation-1.svg" />
@@ -172,10 +172,12 @@
     </n-collapse-transition>
 
     <n-collapse-transition :show="showOutput">
-      <p class="mb-4 text-lg font-semibold">How is it calculated?</p>
+      <p class="mb-4 text-lg font-semibold text-center md:text-left">
+        How is it calculated?
+      </p>
 
       <div
-        class="w-full p-8 flex flex-col items-center bg-amber-50 rounded-lg text-2xl font-medium"
+        class="w-full p-4 md:p-8 flex flex-col items-center bg-amber-50 rounded-lg text-xl md:text-2xl font-medium"
       >
         <p class="reference" v-if="mode == 'bifurcation'">
           The diameter to achieve optimal blood flow in the bifurcation is
@@ -239,7 +241,7 @@
 
         <n-divider />
 
-        <p class="my-4 text-3xl font-semibold">
+        <p class="my-4 text-2xl md:text-3xl font-semibold">
           D<sub>{{ output.label }}</sub> = {{ output.val }} {{ unit }}
         </p>
       </div>
@@ -419,6 +421,6 @@ const calculate = () => {
 
 <style scoped>
 .reference {
-  @apply text-lg text-slate-600 font-medium mb-4;
+  @apply text-lg text-slate-600 font-medium mb-4 text-center md:text-left;
 }
 </style>
