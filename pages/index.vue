@@ -1,14 +1,21 @@
 <template>
-  <main class="text-gray-800 mt-8">
-    <h1>
-      Calculator for the optimal diameter of a diseased bi/tri-furcation segment
-    </h1>
+  <main class="text-gray-800 mt-8 pb-20">
+    <h1>Calculator for the optimal diameter of a diseased bi/tri-furcation</h1>
+
+    <p class="text-xl font-normal mt-3 text-slate-600">
+      When stenting a diseased artery segment in a bifurcation or trifurcation,
+      it is important to aim for a diameter that will achieve optimal blood flow
+      to prevent risks of atherogenesis. The interface below allows to calculate
+      the optimal diameter for a diseased segment knowing the diameters of the
+      other two or three segments in a bifurcation or trifurcation,
+      respectively.
+    </p>
 
     <n-divider />
 
     <p class="mb-4 text-2xl font-medium">
-      Do you want to calculate the optimal diameter for a bifurcation or a
-      trifurcation segment?
+      Do you want to calculate the optimal diameter of a diseased segment in a
+      bifurcation or a trifurcation?
     </p>
 
     <n-radio-group
@@ -23,14 +30,14 @@
 
     <n-divider />
 
-    <div class="flex justify-start items-center space-x-8">
+    <div class="flex flex-col justify-start items-start">
       <p class="text-2xl font-medium">
         Provide the units used for the diameters:
       </p>
       <n-select
         v-model:value="unit"
         :options="unitOptions"
-        class="w-[150px]"
+        class="w-[150px] mt-4"
         size="large"
       />
     </div>
@@ -58,7 +65,9 @@
       </p>
     </div>
 
-    <div class="flex flex-row justify-start items-start">
+    <div
+      class="flex lg:flex-row flex-col-reverse lg:justify-start lg:items-center"
+    >
       <div class="flex flex-col">
         <div class="flex flex-row items-center space-x-4 my-4">
           <p class="text-xl font-medium w-[30px]">D<sub>m</sub></p>
@@ -131,16 +140,16 @@
         </div>
       </div>
 
-      <div class="ml-[200px]" v-if="mode == 'bifurcation'">
+      <div class="lg:ml-[200px] flex" v-if="mode == 'bifurcation'">
         <n-image width="200" src="/images/bifurcation-1.svg" />
         <n-image
           width="250"
           src="/images/bifurcation-2.svg"
-          class="ml-[100px]"
+          class="ml-10 md:ml-20 lg:ml-[100px]"
         />
       </div>
-      <div class="ml-[200px] flex space-x-8" v-if="mode == 'trifurcation'">
-        <n-image width="300" src="/images/trifurcation-1.svg" />
+      <div class="lg:ml-[200px] flex" v-if="mode == 'trifurcation'">
+        <n-image width="200" src="/images/trifurcation-1.svg" />
       </div>
     </div>
 
