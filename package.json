@@ -17,6 +17,7 @@
     "tailwindcss-debug-screens": "^2.2.1"
   },
   "dependencies": {
+    "nuxt-umami": "^2.5.0",
     "vue3-lottie": "^2.7.0"
   }
 }
