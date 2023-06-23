@@ -2,18 +2,19 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  extends: ["nuxt-umami"],
-
-  appConfig: {
-    umami: {
-      host: "https://umami.fairdataihub.org/mushroom",
-      id: "4695e60b-3e6b-4c8c-9c09-b93140265367",
-      customEndpoint: "/api/harvest",
-      version: "2",
+  app: {
+    head: {
+      script: [
+        {
+          src: "https://umami.fairdataihub.org/mushroom",
+          async: true,
+          "data-website-id": "4695e60b-3e6b-4c8c-9c09-b93140265367",
+        },
+      ],
     },
   },
 
-  modules: ["@bg-dev/nuxt-naiveui", "@nuxtjs/tailwindcss"],
+  modules: ["@bg-dev/nuxt-naiveui", "@nuxtjs/tailwindcss", "nuxt-icon"],
 
   naiveui: {
     colorModePreference: "light",

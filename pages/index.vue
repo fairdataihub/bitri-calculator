@@ -1,5 +1,5 @@
 <template>
-  <main class="text-gray-800 mt-8 pb-20">
+  <main class="text-gray-800 mt-8 pb-20 flex-grow">
     <h1>Calculator for the optimal diameter of a diseased bi/tri-furcation</h1>
 
     <p class="text-xl font-normal mt-3 text-slate-600">
