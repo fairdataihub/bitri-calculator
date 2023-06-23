@@ -395,7 +395,22 @@ const diameterCalculation = (dm: number, dx: number[]) => {
   }
 };
 
+declare global {
+  interface Window {
+    umami: {
+      track: (eventName: string, eventData: Record<string, unknown>) => void;
+    };
+  }
+}
+
 const calculate = () => {
+  window.umami.track(mode.value, {
+    dm: dm.value,
+    d1: d1.value,
+    d2: d2.value,
+    d3: d3.value,
+  });
+
   const rightSide = [d1.value, d2.value, d3.value];
 
   // remove undefined values
