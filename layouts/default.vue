@@ -17,16 +17,30 @@
       </div>
 
       <div class="flex space-x-8 items-center mt-4 md:mt-0">
-        <n-image
-          width="140"
-          src="https://fairdataihub.org/logo.svg"
-          preview-disabled
-        />
-        <n-image
-          width="140"
-          src="https://fairdataihub.org/images/collaborators/calmi-logo.png"
-          preview-disabled
-        />
+        <a
+          href="https://fairdataihub.org/"
+          target="_blank"
+          rel="noopener"
+          data-umami-event="fairdataihub-org-navigate"
+        >
+          <n-image
+            width="140"
+            src="https://fairdataihub.org/logo.svg"
+            preview-disabled
+          />
+        </a>
+        <a
+          href="https://www.calmi2.org/"
+          target="_blank"
+          rel="noopener"
+          data-umami-event="calmi2-org-navigate"
+        >
+          <n-image
+            width="140"
+            src="https://fairdataihub.org/images/collaborators/calmi-logo.png"
+            preview-disabled
+          />
+        </a>
       </div>
     </footer>
   </div>
