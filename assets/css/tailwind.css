@@ -28,17 +28,17 @@ body {
 
   /* #region  /**=========== Typography =========== */
   .h0 {
-    @apply font-primary text-3xl font-bold md:text-5xl;
+    @apply font-primary text-2xl font-bold md:text-4xl;
   }
 
   h1,
   .h1 {
-    @apply font-primary text-2xl font-bold md:text-4xl;
+    @apply font-primary text-xl font-bold md:text-3xl;
   }
 
   h2,
   .h2 {
-    @apply font-primary text-xl font-bold md:text-3xl;
+    @apply font-primary text-lg font-bold md:text-2xl;
   }
 
   h3,
@@ -53,7 +53,7 @@ body {
 
   body,
   .p {
-    @apply font-primary text-sm md:text-base;
+    @apply font-primary text-base md:text-base;
   }
   /* #endregion  /**======== Typography =========== */
 

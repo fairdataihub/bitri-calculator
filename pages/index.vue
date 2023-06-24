@@ -2,21 +2,20 @@
   <main class="text-gray-800 mt-8 pb-20 flex-grow">
     <h1>Calculator for the optimal diameter of a diseased bi/tri-furcation</h1>
 
-    <p class="text-xl font-normal mt-3 text-slate-600">
+    <p class="text-base md:text-lg font-normal mt-3 text-slate-600">
       When stenting a diseased artery segment in a bifurcation or trifurcation,
-      it is important to aim for a diameter that will achieve optimal blood flow
-      to prevent risks of atherogenesis. The interface below allows to calculate
-      the optimal diameter for a diseased segment knowing the diameters of the
-      other two or three segments in a bifurcation or trifurcation,
-      respectively.
+      it is important to ensure diameters that will achieve optimal blood
+      restenosis. The interface below allows the determination of the optimal
+      diameter for a diseased segment knowing the diameters of the other two or
+      three segments in a bifurcation or trifurcation, respectively.
     </p>
 
     <n-divider />
 
-    <p class="mb-4 text-2xl font-medium">
+    <h2 class="mb-4 font-medium">
       Do you want to calculate the optimal diameter of a diseased segment in a
       bifurcation or a trifurcation?
-    </p>
+    </h2>
 
     <n-radio-group
       v-model:value="mode"
@@ -31,9 +30,7 @@
     <n-divider />
 
     <div class="flex flex-col justify-start items-start">
-      <p class="text-2xl font-medium">
-        Provide the units used for the diameters:
-      </p>
+      <h2 class="font-medium">Provide the units used for the diameters:</h2>
       <n-select
         v-model:value="unit"
         :options="unitOptions"
@@ -45,12 +42,12 @@
     <n-divider />
 
     <div class="flex flex-col mb-5">
-      <p class="mb-3 text-2xl font-medium" v-if="mode === 'bifurcation'">
+      <h2 class="mb-3 font-medium" v-if="mode === 'bifurcation'">
         Enter two of the three available diameters:
-      </p>
-      <p class="mb-3 text-2xl font-medium" v-else>
+      </h2>
+      <h2 class="mb-3 font-medium" v-else>
         Enter three of the four available diameters:
-      </p>
+      </h2>
 
       <!-- <n-divider /> -->
 
