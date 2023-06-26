@@ -4,10 +4,11 @@
 
     <p class="text-base md:text-lg font-normal mt-3 text-slate-600">
       When stenting a diseased artery segment in a bifurcation or trifurcation,
-      it is important to ensure diameters that will achieve optimal blood
-      restenosis. The interface below allows the determination of the optimal
-      diameter for a diseased segment knowing the diameters of the other two or
-      three segments in a bifurcation or trifurcation, respectively.
+      it is important to ensure diameters that will achieve optimal blood flow
+      to prevent risks of restenosis. The interface below allows the
+      determination of the optimal diameter for a diseased segment knowing the
+      diameters of the other two or three segments in a bifurcation or
+      trifurcation, respectively.
     </p>
 
     <n-divider />
